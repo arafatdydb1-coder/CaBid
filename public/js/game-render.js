@@ -8,7 +8,7 @@
 (function (global) {
   // Render-only mirror of server/constants.js PIN_DURATION_MS, used purely
   // to scale the ring bar. Kept in sync with the server constant.
-  const PIN_DURATION_MS = 3000;
+  const PIN_DURATION_MS = 1800;
 
   const RING_RADIUS = 88;
   const RING_CIRC = 2 * Math.PI * RING_RADIUS;

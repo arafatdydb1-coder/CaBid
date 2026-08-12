@@ -18,6 +18,13 @@
     SCREENS.forEach((s) => $(`#${s}`).classList.toggle('active', s === id));
   }
 
+  function setLocalArm(role, state) {
+    const arm = $(`#arm-${role}`);
+    if (!arm) return;
+    arm.classList.toggle('down', state === 'down');
+    arm.classList.toggle('up', state !== 'down');
+  }
+
   function endSession() {
     myRole = null;
     SocketClient.inSession = false;
@@ -71,7 +78,7 @@
     onMatchOver: (d) => {
       const scores = (d && d.scores) || GameRender.getScores();
       $('#matchover-title').textContent = d.winner === 'cat' ? 'The Cat Wins!' : 'The Bird Wins!';
-      $('#matchover-sub').textContent = d.winner.toUpperCase() + ' held the pin the full 3 seconds to take the match.';
+      $('#matchover-sub').textContent = d.winner.toUpperCase() + ' held the pin the full 1.8 seconds to take the match.';
       $('#final-cat').textContent = String(scores.cat);
       $('#final-bird').textContent = String(scores.bird);
       showScreen('screen-matchover');
@@ -110,6 +117,7 @@
       if (role !== myRole || pressing) return;
       e.preventDefault();
       pressing = true;
+      setLocalArm(role, 'down');
       try { el.setPointerCapture(e.pointerId); } catch (err) { /* ignore */ }
       SocketClient.press();
     });
@@ -117,6 +125,7 @@
     const handleRelease = () => {
       if (role !== myRole || !pressing) return;
       pressing = false;
+      setLocalArm(role, 'up');
       SocketClient.release();
     };
 

@@ -46,7 +46,7 @@ function clearPin(room) {
 }
 
 /**
- * A pin just completed server-side (the 3s timer fired untouched).
+ * A pin just completed server-side (the 1.8s timer fired untouched).
  */
 function completePin(io, room) {
   clearPin(room);

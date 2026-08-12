@@ -6,7 +6,7 @@
  */
 module.exports = {
   // Continuous hold needed (server-side, millis) to score a pin.
-  PIN_DURATION_MS: 3000,
+  PIN_DURATION_MS: 1800,
 
   // Presses this close together (server receive-time, millis) are a
   // neutral clash: no pinner is assigned, neither player is trapped.
