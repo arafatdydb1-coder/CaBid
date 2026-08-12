@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>CaBid — Cat vs Bird</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700;9..144,900&family=Karla:wght@400;600;700&family=Patrick+Hand&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <main id="app">
+
+    <!-- ============ HOME ============ -->
+    <section id="screen-home" class="screen active">
+      <div class="home-inner">
+        <div class="mascot-row" aria-hidden="true">
+          <img src="assets/svg/cat-idle.svg" alt="" class="mascot mascot-cat">
+          <span class="mascot-vs">vs</span>
+          <img src="assets/svg/bird-idle.svg" alt="" class="mascot mascot-bird">
+        </div>
+        <h1 class="logo">CaBid</h1>
+        <p class="tagline">Two players. Two devices. One table.<br>
+        Press your hand down &amp; pin the opponent for <b>3 seconds</b> to score. First to <b>5</b> wins.</p>
+        <button id="btn-create" class="btn btn-primary">Create Room</button>
+        <div class="join-row">
+          <input id="join-code" type="text" maxlength="4" placeholder="CODE"
+                 autocomplete="off" autocapitalize="characters" spellcheck="false" inputmode="text">
+          <button id="btn-join" class="btn">Join</button>
+        </div>
+        <p class="footnote">No account. No install. Open this page on two phones.</p>
+      </div>
+    </section>
+
+    <!-- ============ LOBBY ============ -->
+    <section id="screen-lobby" class="screen">
+      <div class="lobby-inner">
+        <h2 class="section-title">Room</h2>
+        <p class="lobby-caption">Share this code with your opponent</p>
+        <div id="lobby-code" class="room-code">----</div>
+        <div class="lobby-wait">
+          <div class="spinner" aria-hidden="true"></div>
+          <p id="lobby-status" class="lobby-status">Waiting for opponent…</p>
+        </div>
+        <button id="btn-home-lobby" class="btn btn-ghost">Leave</button>
+      </div>
+    </section>
+
+    <!-- ============ GAME ============ -->
+    <section id="screen-game" class="screen">
+      <div class="game-inner">
+        <header class="scoreboard">
+          <div class="score-pill cat-pill">
+            <span class="pill-name">Cat</span>
+            <span id="score-cat" class="pill-score">0</span>
+          </div>
+          <div class="match-label">first to 5</div>
+          <div class="score-pill bird-pill">
+            <span id="score-bird" class="pill-score">0</span>
+            <span class="pill-name">Bird</span>
+          </div>
+        </header>
+
+        <div class="table">
+          <div class="table-inner">
+            <div id="char-cat" class="char char-cat">
+              <img src="assets/svg/cat-stand.svg" alt="Cat">
+            </div>
+            <div id="char-bird" class="char char-bird">
+              <img src="assets/svg/bird-stand.svg" alt="Bird">
+            </div>
+            <div id="arm-cat" class="arm arm-cat up">
+              <img src="assets/svg/cat-paw.svg" alt="">
+            </div>
+            <div id="arm-bird" class="arm arm-bird up">
+              <img src="assets/svg/bird-wing.svg" alt="">
+            </div>
+            <div id="ring-wrap" class="pin-ring-wrap hidden">
+              <img id="pin-ring" src="assets/svg/pin-ring.svg" alt="">
+              <svg class="ring-progress-svg" viewBox="0 0 200 200" aria-hidden="true">
+                <circle id="ring-progress" cx="100" cy="100" r="88" fill="none"/>
+              </svg>
+              <span id="ring-label" class="ring-label"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="controls">
+          <button id="hand-cat" class="hold-btn cat-hold" aria-label="Cat hold">
+            <img src="assets/svg/cat-face.svg" alt="" class="hold-icon">
+            <span class="hold-text"><span class="hold-role">Cat</span><span class="hold-cmd">hold</span></span>
+          </button>
+          <button id="hand-bird" class="hold-btn bird-hold" aria-label="Bird hold">
+            <img src="assets/svg/bird-face.svg" alt="" class="hold-icon">
+            <span class="hold-text"><span class="hold-role">Bird</span><span class="hold-cmd">hold</span></span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ MATCH OVER ============ -->
+    <section id="screen-matchover" class="screen">
+      <div class="end-inner">
+        <div class="trophy" aria-hidden="true">★</div>
+        <h2 id="matchover-title" class="end-title">The Cat Wins!</h2>
+        <p id="matchover-sub" class="end-sub">Held the pin the full 3 seconds.</p>
+        <div class="end-scores">
+          <span class="end-cat">Cat <b id="final-cat">0</b></span>
+          <span class="end-bird">Bird <b id="final-bird">0</b></span>
+        </div>
+        <button id="btn-rematch" class="btn btn-primary">Rematch</button>
+        <button id="btn-home-end" class="btn btn-ghost">Home</button>
+      </div>
+    </section>
+
+  </main>
+
+  <div id="round-flash" class="round-flash" aria-live="assertive"></div>
+  <div id="toast" class="toast" aria-live="polite"></div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/js/socket-client.js"></script>
+  <script src="/js/game-render.js"></script>
+  <script src="/js/main.js"></script>
+</body>
+</html>
