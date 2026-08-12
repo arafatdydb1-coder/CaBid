@@ -1,9 +1,18 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 90" width="200" height="90">
-  <g fill="none" stroke="#3E2418" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M8 52 C44 46 80 44 110 45 C136 46 156 49 172 53"/>
-    <path d="M172 32 C190 32 198 40 198 48 C198 56 190 64 172 64 C160 64 152 56 152 48 C152 40 160 32 172 32 Z"/>
-    <path d="M174 40 L174 56"/>
-    <path d="M182 40 L182 56"/>
-    <path d="M190 42 L190 54"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 100" width="200" height="100">
+  <g fill="none" stroke="#3E2418" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round">
+    <!-- arm reaching out -->
+    <path d="M8 56 C30 50 60 48 100 48 C130 48 152 50 168 54"/>
+    <!-- paw pad (main) -->
+    <path d="M168 36 C188 36 198 46 198 54 C198 64 188 74 168 74 C156 74 148 64 148 54 C148 46 156 36 168 36 Z"/>
+    <!-- toe beans -->
+    <circle cx="162" cy="44" r="5" fill="#3E2418" stroke="none"/>
+    <circle cx="174" cy="44" r="5" fill="#3E2418" stroke="none"/>
+    <circle cx="186" cy="46" r="4.5" fill="#3E2418" stroke="none"/>
+    <!-- main pad -->
+    <ellipse cx="174" cy="60" rx="10" ry="8" fill="#3E2418" stroke="none"/>
+    <!-- claws (little lines at fingertips) -->
+    <path d="M158 38 L154 32"/>
+    <path d="M170 36 L170 30"/>
+    <path d="M182 38 L186 32"/>
   </g>
 </svg>

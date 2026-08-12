@@ -1,20 +1,40 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
-  <g fill="none" stroke="#3E2418" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M76 58 L58 12 L100 36"/>
-    <path d="M124 58 L142 12 L100 36"/>
-    <path d="M64 92 C60 54 78 38 100 38 C122 38 140 54 136 92 C138 122 122 146 100 146 C78 146 62 122 64 92 Z"/>
-    <circle cx="82" cy="88" r="7"/>
-    <circle cx="118" cy="88" r="7"/>
-    <circle cx="80" cy="86" r="2.5" fill="#3E2418"/>
-    <circle cx="116" cy="86" r="2.5" fill="#3E2418"/>
-    <path d="M100 102 L93 108 L107 108 Z"/>
-    <path d="M100 108 C100 118 90 116 87 110"/>
-    <path d="M100 108 C100 118 110 116 113 110"/>
-    <path d="M74 100 L48 96"/>
-    <path d="M76 110 L50 114"/>
-    <path d="M126 100 L152 96"/>
-    <path d="M124 110 L150 114"/>
-    <path d="M58 158 C58 174 72 184 90 184"/>
-    <path d="M142 158 C142 174 128 184 110 184"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 220" width="200" height="220">
+  <g fill="none" stroke="#3E2418" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round">
+    <!-- ears -->
+    <path d="M74 62 L62 16 L94 44"/>
+    <path d="M126 62 L138 16 L106 44"/>
+    <!-- inner ears -->
+    <path d="M78 56 L70 28 L92 46"/>
+    <path d="M122 56 L130 28 L108 46"/>
+    <!-- head (face radius decreased) -->
+    <path d="M72 82 C68 52 82 36 100 36 C118 36 132 52 128 82 C130 104 118 118 100 118 C82 118 70 104 72 82 Z"/>
+    <!-- eyes (radius decreased from 8 to 6) -->
+    <circle cx="88" cy="76" r="6" fill="#3E2418"/>
+    <circle cx="112" cy="76" r="6" fill="#3E2418"/>
+    <!-- eye shine -->
+    <circle cx="86" cy="74" r="2" fill="#FBF6EE"/>
+    <circle cx="110" cy="74" r="2" fill="#FBF6EE"/>
+    <!-- nose -->
+    <path d="M100 88 L96 93 L104 93 Z"/>
+    <!-- mouth (W shape) -->
+    <path d="M96 96 C96 102 90 100 87 96"/>
+    <path d="M104 96 C104 102 110 100 113 96"/>
+    <!-- whiskers -->
+    <path d="M80 86 L54 82"/>
+    <path d="M80 92 L56 96"/>
+    <path d="M80 98 L58 104"/>
+    <path d="M120 86 L146 82"/>
+    <path d="M120 92 L144 96"/>
+    <path d="M120 98 L142 104"/>
+    <!-- body (taller) -->
+    <path d="M80 114 C76 134 78 164 88 180 C94 188 106 188 112 180 C122 164 124 134 120 114"/>
+    <!-- front paws -->
+    <path d="M84 176 L80 192 L88 192 L92 180"/>
+    <path d="M116 176 L120 192 L112 192 L108 180"/>
+    <!-- back paws -->
+    <path d="M76 188 L68 196 L80 198 L84 190"/>
+    <path d="M124 188 L132 196 L120 198 L116 190"/>
+    <!-- tail (curly) -->
+    <path d="M122 164 C140 158 156 168 152 184 C148 196 136 194 138 180"/>
   </g>
 </svg>
