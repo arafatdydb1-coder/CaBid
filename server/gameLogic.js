@@ -63,6 +63,9 @@ function completePin(io, room) {
 
   if (room.players[winner].score >= POINTS_TO_WIN) {
     room.over = true;
+    // The match is finished — the ephemeral chat disappears with it.
+    room.messages = [];
+    room.rematchVotes = { cat: null, bird: null };
     io.to(room.code).emit('matchOver', { winner, scores });
   } else {
     io.to(room.code).emit('pointScored', { winner, scores });
@@ -148,6 +151,8 @@ function resetMatch(room) {
   }
   room.started = true;
   room.over = false;
+  room.rematchVotes = { cat: null, bird: null };
+  room.messages = [];
 }
 
 module.exports = {

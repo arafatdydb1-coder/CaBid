@@ -35,7 +35,7 @@
 
       route('roomCreated', (d) => {
         this.myCode = d.code;
-        this.myRole = 'cat';
+        this.myRole = d.role;
         this.inSession = true;
         this._cbs.onRoomCreated && this._cbs.onRoomCreated(d);
       });
@@ -58,17 +58,21 @@
       route('pointScored', (d) => { this._cbs.onPointScored && this._cbs.onPointScored(d); });
       route('matchOver', (d) => { this._cbs.onMatchOver && this._cbs.onMatchOver(d); });
       route('opponentLeft', (d) => { this._cbs.onOpponentLeft && this._cbs.onOpponentLeft(d); });
+      route('chatMessage', (d) => { this._cbs.onChatMessage && this._cbs.onChatMessage(d); });
+      route('rematchUpdate', (d) => { this._cbs.onRematchUpdate && this._cbs.onRematchUpdate(d); });
     },
 
     ensureConnected() {
       if (this.socket && !this.socket.connected) this.socket.connect();
     },
 
-    createRoom() { this.ensureConnected(); this.socket.emit('createRoom'); },
+    createRoom(role) { this.ensureConnected(); this.socket.emit('createRoom', { role }); },
     joinRoom(code) { this.ensureConnected(); this.socket.emit('joinRoom', { code }); },
     press() { if (this.socket && this.socket.connected && this.inSession) this.socket.emit('press'); },
     release() { if (this.socket && this.socket.connected && this.inSession) this.socket.emit('release'); },
     rematch() { if (this.socket && this.socket.connected && this.inSession) this.socket.emit('rematch'); },
+    noRematch() { if (this.socket && this.socket.connected && this.inSession) this.socket.emit('noRematch'); },
+    sendChat(text) { if (this.socket && this.socket.connected && this.inSession) this.socket.emit('chat', { text }); },
 
     leaveToHome() {
       this.inSession = false;

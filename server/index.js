@@ -49,12 +49,16 @@ function removeSocketFromRoom(socket) {
 }
 
 io.on('connection', (socket) => {
-  socket.on('createRoom', () => {
+  socket.on('createRoom', (payload) => {
     removeSocketFromRoom(socket);
+    // The creator picks which side they play (cat or bird); the joiner
+    // automatically gets the other side.
+    let role = ((payload && payload.role) || 'cat').toLowerCase();
+    if (role !== 'cat' && role !== 'bird') role = 'cat';
     const room = rooms.createRoom();
-    rooms.addPlayer(room, socket.id, 'cat');
+    rooms.addPlayer(room, socket.id, role);
     socket.join(room.code);
-    socket.emit('roomCreated', { code: room.code });
+    socket.emit('roomCreated', { code: room.code, role });
     io.to(room.code).emit('lobbyUpdate', { playersConnected: 1 });
   });
 
@@ -115,10 +119,50 @@ io.on('connection', (socket) => {
     gameLogic.handleRelease(io, room, role, Date.now());
   });
 
+  function broadcastRematch(room) {
+    io.to(room.code).emit('rematchUpdate', {
+      cat: room.rematchVotes.cat,
+      bird: room.rematchVotes.bird
+    });
+  }
+
+  // A player says they want a rematch. A rematch only starts when BOTH
+  // players have voted 'yes' — nobody can force a second match.
   socket.on('rematch', () => {
     const room = rooms.findRoomBySocketId(socket.id);
     if (!room || !room.over) return;
-    startGameForRoom(room);
+    const role = rooms.roleOf(room, socket.id);
+    if (!role) return;
+    room.rematchVotes[role] = 'yes';
+    broadcastRematch(room);
+    if (room.rematchVotes.cat === 'yes' && room.rematchVotes.bird === 'yes') {
+      startGameForRoom(room);
+    }
+  });
+
+  // A player says they are not interested in a rematch.
+  socket.on('noRematch', () => {
+    const room = rooms.findRoomBySocketId(socket.id);
+    if (!room || !room.over) return;
+    const role = rooms.roleOf(room, socket.id);
+    if (!role) return;
+    room.rematchVotes[role] = 'no';
+    broadcastRematch(room);
+  });
+
+  // Simple ephemeral chat. Messages live only in memory and are wiped
+  // when the match ends.
+  socket.on('chat', (payload) => {
+    const room = rooms.findRoomBySocketId(socket.id);
+    if (!room) return;
+    const role = rooms.roleOf(room, socket.id);
+    if (!role) return;
+    const text = String((payload && payload.text) || '').trim().slice(0, 200);
+    if (!text) return;
+    const message = { role, text, ts: Date.now() };
+    room.messages.push(message);
+    if (room.messages.length > 50) room.messages.shift();
+    io.to(room.code).emit('chatMessage', message);
   });
 
   socket.on('disconnect', () => {

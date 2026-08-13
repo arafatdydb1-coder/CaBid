@@ -23,6 +23,19 @@
         <h1 class="logo">CaBid</h1>
         <p class="tagline">Two players. Two devices. One table.<br>
         Press your hand down &amp; pin the opponent for <b>1.8 seconds</b> to score. First to <b>5</b> wins.</p>
+        <div class="role-pick">
+          <p class="role-pick-label">You'll play as</p>
+          <div class="role-pick-options">
+            <button id="role-cat" class="role-card active" data-role="cat" aria-pressed="true">
+              <img src="assets/svg/cat-face.svg" alt="">
+              <span>Cat</span>
+            </button>
+            <button id="role-bird" class="role-card" data-role="bird" aria-pressed="false">
+              <img src="assets/svg/bird-face.svg" alt="">
+              <span>Bird</span>
+            </button>
+          </div>
+        </div>
         <button id="btn-create" class="btn btn-primary">Create Room</button>
         <div class="join-row">
           <input id="join-code" type="text" maxlength="4" placeholder="CODE"
@@ -109,12 +122,57 @@
           <span class="end-cat">Cat <b id="final-cat">0</b></span>
           <span class="end-bird">Bird <b id="final-bird">0</b></span>
         </div>
-        <button id="btn-rematch" class="btn btn-primary">Rematch</button>
+
+        <div class="rematch-panel">
+          <p class="rematch-hint">Both players must agree to rematch</p>
+          <div class="rematch-row">
+            <div class="rematch-row-top">
+              <span class="rematch-name">Player 1 · Cat</span>
+              <div class="rematch-options">
+                <button id="rematch-yes-cat" class="rematch-opt opt-yes">Rematch</button>
+                <button id="rematch-no-cat" class="rematch-opt opt-no">No</button>
+              </div>
+            </div>
+            <div id="rematch-bar-cat" class="rematch-bar"></div>
+          </div>
+          <div class="rematch-row">
+            <div class="rematch-row-top">
+              <span class="rematch-name">Player 2 · Bird</span>
+              <div class="rematch-options">
+                <button id="rematch-yes-bird" class="rematch-opt opt-yes">Rematch</button>
+                <button id="rematch-no-bird" class="rematch-opt opt-no">No</button>
+              </div>
+            </div>
+            <div id="rematch-bar-bird" class="rematch-bar"></div>
+          </div>
+        </div>
+
         <button id="btn-home-end" class="btn btn-ghost">Home</button>
       </div>
     </section>
 
   </main>
+
+  <!-- ============ CHAT (sidebar message icon + drawer) ============ -->
+  <button id="chat-toggle" class="chat-toggle" aria-label="Chat" aria-expanded="false">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+    </svg>
+    <span id="chat-dot" class="chat-dot hidden"></span>
+  </button>
+
+  <div id="chat-panel" class="chat-panel">
+    <div class="chat-head">
+      <span>Chat</span>
+      <button id="chat-close" class="chat-close" aria-label="Close chat">&times;</button>
+    </div>
+    <div id="chat-messages" class="chat-messages"></div>
+    <form id="chat-form" class="chat-form">
+      <input id="chat-input" type="text" maxlength="200" placeholder="Message…"
+             autocomplete="off" spellcheck="true">
+      <button type="submit" class="btn chat-send">Send</button>
+    </form>
+  </div>
 
   <div id="round-flash" class="round-flash" aria-live="assertive"></div>
   <div id="toast" class="toast" aria-live="polite"></div>

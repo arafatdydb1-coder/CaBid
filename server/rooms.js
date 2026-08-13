@@ -35,7 +35,14 @@ function createRoom() {
     pinTick: null,
     started: false,
     over: false,
-    cleanupTimer: null
+    cleanupTimer: null,
+    // Ephemeral, in-memory chat. Cleared when the match ends.
+    messages: [],
+    // Both players must vote 'yes' to rematch. null = not decided yet.
+    rematchVotes: {
+      cat: null,
+      bird: null
+    }
   };
   rooms.set(code, room);
   return room;
