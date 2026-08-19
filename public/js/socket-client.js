@@ -66,7 +66,10 @@
       if (this.socket && !this.socket.connected) this.socket.connect();
     },
 
-    createRoom(role) { this.ensureConnected(); this.socket.emit('createRoom', { role }); },
+    createRoom(role, pointsToWin) {
+      this.ensureConnected();
+      this.socket.emit('createRoom', { role, pointsToWin });
+    },
     joinRoom(code) { this.ensureConnected(); this.socket.emit('joinRoom', { code }); },
     press() { if (this.socket && this.socket.connected && this.inSession) this.socket.emit('press'); },
     release() { if (this.socket && this.socket.connected && this.inSession) this.socket.emit('release'); },

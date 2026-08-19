@@ -1,6 +1,6 @@
 'use strict';
 
-const { ROOM_CODE_LENGTH } = require('./constants');
+const { ROOM_CODE_LENGTH, POINTS_TO_WIN, ALLOWED_MATCH_LENGTHS } = require('./constants');
 
 // In-memory room registry. Ephemeral by design — rooms are lost on restart.
 const rooms = new Map();
@@ -19,9 +19,14 @@ function generateRoomCode() {
 }
 
 /**
- * Create a fresh room. Returns the room object.
+ * Create a fresh room. `pointsToWin` lets the creator pick how many
+ * points win the match (3, 5, 7 or 9). Anything else falls back to the
+ * default. Returns the room object.
  */
-function createRoom() {
+function createRoom(pointsToWin) {
+  if (!ALLOWED_MATCH_LENGTHS.includes(pointsToWin)) {
+    pointsToWin = POINTS_TO_WIN;
+  }
   const code = generateRoomCode();
   const room = {
     code,
@@ -29,6 +34,8 @@ function createRoom() {
       cat: null,
       bird: null
     },
+    // Points needed to win the match. Set by the room creator.
+    pointsToWin,
     pinnerRole: null,
     pinStartTs: null,
     pinTimer: null,

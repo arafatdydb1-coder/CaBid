@@ -3,8 +3,7 @@
 const {
   PIN_DURATION_MS,
   PIN_TICK_MS,
-  SIMULTANEOUS_THRESHOLD_MS,
-  POINTS_TO_WIN
+  SIMULTANEOUS_THRESHOLD_MS
 } = require('./constants');
 const { otherRole } = require('./rooms');
 
@@ -61,7 +60,7 @@ function completePin(io, room) {
   room.players.cat.handState = 'up';
   room.players.bird.handState = 'up';
 
-  if (room.players[winner].score >= POINTS_TO_WIN) {
+  if (room.players[winner].score >= room.pointsToWin) {
     room.over = true;
     // The match is finished — the ephemeral chat disappears with it.
     room.messages = [];

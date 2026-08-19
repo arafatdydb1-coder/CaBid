@@ -22,7 +22,7 @@
         </div>
         <h1 class="logo">CaBid</h1>
         <p class="tagline">Two players. Two devices. One table.<br>
-        Press your hand down &amp; pin the opponent for <b>1.8 seconds</b> to score. First to <b>5</b> wins.</p>
+        Press your hand down &amp; pin the opponent for <b>1.8 seconds</b> to score.</p>
         <div class="role-pick">
           <p class="role-pick-label">You'll play as</p>
           <div class="role-pick-options">
@@ -34,6 +34,15 @@
               <img src="assets/svg/bird-face.svg" alt="">
               <span>Bird</span>
             </button>
+          </div>
+        </div>
+        <div class="len-pick">
+          <p class="role-pick-label">Match length</p>
+          <div class="len-pick-options">
+            <button class="len-card" data-len="3" aria-pressed="false">3</button>
+            <button class="len-card active" data-len="5" aria-pressed="true">5</button>
+            <button class="len-card" data-len="7" aria-pressed="false">7</button>
+            <button class="len-card" data-len="9" aria-pressed="false">9</button>
           </div>
         </div>
         <button id="btn-create" class="btn btn-primary">Create Room</button>
@@ -68,7 +77,7 @@
             <span class="pill-name">Cat</span>
             <span id="score-cat" class="pill-score">0</span>
           </div>
-          <div class="match-label">first to 5</div>
+          <div id="match-length-label" class="match-label">first to 5</div>
           <div class="score-pill bird-pill">
             <span id="score-bird" class="pill-score">0</span>
             <span class="pill-name">Bird</span>

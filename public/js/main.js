@@ -13,6 +13,7 @@
   let currentScreen = 'screen-home';
   let pressing = false;
   let chosenRole = 'cat';
+  let chosenMatchLength = 5;
   let chatOpen = false;
   let chatUnread = 0;
 
@@ -29,6 +30,21 @@
 
   document.querySelectorAll('.role-card').forEach((card) => {
     card.addEventListener('click', () => setChosenRole(card.dataset.role));
+  });
+
+  /* ---------------- match length picker (creator) ---------------- */
+
+  function setChosenMatchLength(len) {
+    chosenMatchLength = len;
+    document.querySelectorAll('.len-card').forEach((card) => {
+      const isActive = Number(card.dataset.len) === len;
+      card.classList.toggle('active', isActive);
+      card.setAttribute('aria-pressed', String(isActive));
+    });
+  }
+
+  document.querySelectorAll('.len-card').forEach((card) => {
+    card.addEventListener('click', () => setChosenMatchLength(Number(card.dataset.len)));
   });
 
   /* ---------------- chat ---------------- */
@@ -170,6 +186,9 @@
     },
     onGameStart: (d) => {
       myRole = d.yourRole;
+      const pts = d.pointsToWin || 5;
+      const label = document.getElementById('match-length-label');
+      if (label) label.textContent = 'first to ' + pts;
       GameRender.init(myRole);
       showScreen('screen-game');
     },
@@ -225,7 +244,7 @@
     SocketClient.joinRoom(code);
   }
 
-  $('#btn-create').addEventListener('click', () => SocketClient.createRoom(chosenRole));
+  $('#btn-create').addEventListener('click', () => SocketClient.createRoom(chosenRole, chosenMatchLength));
   $('#btn-join').addEventListener('click', joinFromHome);
   $('#join-code').addEventListener('keydown', (e) => { if (e.key === 'Enter') joinFromHome(); });
 

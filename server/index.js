@@ -31,8 +31,8 @@ function scheduleCleanup(room) {
 
 function startGameForRoom(room) {
   gameLogic.resetMatch(room);
-  io.to(room.players.cat.socketId).emit('gameStart', { yourRole: 'cat' });
-  io.to(room.players.bird.socketId).emit('gameStart', { yourRole: 'bird' });
+  io.to(room.players.cat.socketId).emit('gameStart', { yourRole: 'cat', pointsToWin: room.pointsToWin });
+  io.to(room.players.bird.socketId).emit('gameStart', { yourRole: 'bird', pointsToWin: room.pointsToWin });
   io.to(room.code).emit('stateUpdate', gameLogic.serializeRoom(room, Date.now()));
 }
 
@@ -55,10 +55,11 @@ io.on('connection', (socket) => {
     // automatically gets the other side.
     let role = ((payload && payload.role) || 'cat').toLowerCase();
     if (role !== 'cat' && role !== 'bird') role = 'cat';
-    const room = rooms.createRoom();
+    const pointsToWin = (payload && payload.pointsToWin) || constants.POINTS_TO_WIN;
+    const room = rooms.createRoom(pointsToWin);
     rooms.addPlayer(room, socket.id, role);
     socket.join(room.code);
-    socket.emit('roomCreated', { code: room.code, role });
+    socket.emit('roomCreated', { code: room.code, role, pointsToWin: room.pointsToWin });
     io.to(room.code).emit('lobbyUpdate', { playersConnected: 1 });
   });
 

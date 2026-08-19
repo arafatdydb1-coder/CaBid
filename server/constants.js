@@ -16,8 +16,12 @@ module.exports = {
   // progress ring animates. Purely cosmetic; the server remains the clock.
   PIN_TICK_MS: 100,
 
-  // First player to this score wins the match.
+  // First player to this score wins the match (default when the creator
+  // doesn't pick a custom match length).
   POINTS_TO_WIN: 5,
+
+  // Match lengths the room creator may choose from.
+  ALLOWED_MATCH_LENGTHS: [3, 5, 7, 9],
 
   MAX_PLAYERS_PER_ROOM: 2,
   ROOM_CODE_LENGTH: 4,
