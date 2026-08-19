@@ -154,6 +154,7 @@
 
   function goHome() {
     endSession();
+    Sound.stop();
     GameRender.reset();
     setChatOpen(false);
     showScreen('screen-home');
@@ -185,6 +186,7 @@
       }
     },
     onGameStart: (d) => {
+      Sound.stop();
       myRole = d.yourRole;
       const pts = d.pointsToWin || 5;
       const label = document.getElementById('match-length-label');
@@ -201,7 +203,10 @@
     onPointScored: (d) => { GameRender.flash('PINNED!', 'flash-pin'); },
     onMatchOver: (d) => {
       const scores = (d && d.scores) || GameRender.getScores();
-      $('#matchover-title').textContent = d.winner === 'cat' ? 'The Cat Wins!' : 'The Bird Wins!';
+      const winner = d.winner;
+      const loser = winner === 'cat' ? 'bird' : 'cat';
+      Sound.play(loser + '-lose');
+      $('#matchover-title').textContent = winner === 'cat' ? 'The Cat Wins!' : 'The Bird Wins!';
       $('#matchover-sub').textContent = d.winner.toUpperCase() + ' held the pin the full 1.8 seconds to take the match.';
       $('#final-cat').textContent = String(scores.cat);
       $('#final-bird').textContent = String(scores.bird);
@@ -266,6 +271,9 @@
       SocketClient.noRematch();
     });
   });
+
+  // Unlock audio on the first user interaction (autoplay policy).
+  window.addEventListener('pointerdown', () => Sound.unlock(), { once: true });
 
   $('#btn-home-lobby').addEventListener('click', () => { SocketClient.leaveToHome(); goHome(); });
   $('#btn-home-end').addEventListener('click', () => { SocketClient.leaveToHome(); goHome(); });
